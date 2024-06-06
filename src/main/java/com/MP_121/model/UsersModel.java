@@ -2,7 +2,7 @@ package com.MP_121.model;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "users_table")
@@ -10,21 +10,29 @@ import java.util.Objects;
 public class UsersModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    @Column (name = "userId")
+    private Long id;
 
-    String login;
+    @Column (name = "login")
+    private String login;
 
+    @Column (name = "email")
     String email;
 
+    @Column (name = "password")
     String password;
 
+    @Column (name ="role")
     String role;
 
-    public Integer getId() {
+    @OneToMany(mappedBy = "seller")
+    private List<ProductModel> items;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

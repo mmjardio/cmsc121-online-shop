@@ -3,21 +3,31 @@ package com.MP_121.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product_table")
 public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String name;
-    private String description;
-    private Double price;
-    private Integer quantity;
+    @Column (name="productId")
+    private Long id;
 
-    public Integer getId() {
+    @Column (name ="name")
+    private String name;
+
+    @Column (name="description")
+    private String description;
+
+    @Column (name="price")
+    private Double price;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private UsersModel sellerId;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,12 +55,12 @@ public class ProductModel {
         this.price = price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public UsersModel getSellerId() {
+        return sellerId;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setSellerId(UsersModel sellerId) {
+        this.sellerId = sellerId;
     }
 }
 
