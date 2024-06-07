@@ -7,6 +7,10 @@ import java.util.*;
 
 @Service
 public class ProductService {
+
+    public ProductService(){
+
+    }
     private ProductRepository productRepository;
 
     public ProductModel saveItem(ProductModel item) {
@@ -27,6 +31,11 @@ public class ProductService {
 
     public List<ProductModel> getAllItems() {
         return productRepository.findAll();
+    }
+
+    public ProductModel getItemById(Long productId) {
+        Optional<ProductModel> productOptional = productRepository.findById(productId);
+        return productOptional.orElse(null);
     }
 
     public List<ProductModel> searchItemsByName(String name) {

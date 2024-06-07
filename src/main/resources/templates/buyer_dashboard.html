@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard</title>
+    <style>
+        /* Basic styling for demonstration */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-card h3 {
+            margin-top: 0;
+        }
+        .product-card p {
+            margin-bottom: 10px;
+        }
+        .cart-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            background-color: #f9f9f9;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cart-item span {
+            flex: 1;
+        }
+        .cart-item button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to Buyer Dashboard</h1>
+
+<!-- Product Search Form -->
+<form action="/products/search" method="get">
+    <label for="search">Search Products:</label>
+    <input type="text" id="search" name="keyword">
+    <button type="submit">Search</button>
+</form>
+
+<!-- Product Display Container -->
+<div class="product-container">
+    <!-- Product Cards (Generated dynamically from backend) -->
+    <!-- Example: Replace with Thymeleaf iteration if using Spring Boot Thymeleaf -->
+    <div class="product-card">
+        <h3>Product Name</h3>
+        <p>Product Description</p>
+        <p>Price: $X.XX</p>
+        <form action="/cart/add/{productId}" method="post">
+            <input type="number" name="quantity" value="1" min="1" max="10">
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+    <!-- Repeat product cards for each product -->
+</div>
+
+<!-- Cart Display -->
+<div class="cart-container">
+    <h2>Shopping Cart</h2>
+    <div class="cart-items">
+        <!-- Cart Items (Generated dynamically from backend) -->
+        <!-- Example: Replace with Thymeleaf iteration if using Spring Boot Thymeleaf -->
+        <div class="cart-item">
+            <span>Product Name</span>
+            <span>Quantity: X</span>
+            <button onclick="removeFromCart({{cartItem.id}})">Remove</button>
+        </div>
+        <!-- Repeat cart items for each item in the cart -->
+    </div>
+    <button onclick="checkoutCart()">Checkout</button>
+</div>
+
+<script>
+    // JavaScript functions for interaction (Optional: Replace with Angular/React/Vue components if preferred)
+    function removeFromCart(cartId) {
+        // Implement logic to remove item from cart via AJAX request
+        fetch('/cart/remove/' + cartId, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // Reload or update cart display after successful removal
+                location.reload();
+            } else {
+                console.error('Failed to remove item from cart');
+            }
+        }).catch(error => {
+            console.error('Error removing item from cart:', error);
+        });
+    }
+
+    function checkoutCart() {
+        // Implement logic to checkout cart via AJAX request
+        fetch('/cart/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: 'buyer@example.com', // Replace with actual buyer email
+                password: 'buyerpassword' // Replace with actual buyer password
+            })
+        }).then(response => {
+            if (response.ok) {
+                // Optionally handle success message or redirect after checkout
+                alert('Checkout successful!');
+                // Example: Redirect to order history page
+                window.location.href = '/buyer/orders';
+            } else {
+                console.error('Failed to checkout cart');
+            }
+        }).catch(error => {
+            console.error('Error checking out cart:', error);
+        });
+    }
+</script>
+</body>
+</html>
