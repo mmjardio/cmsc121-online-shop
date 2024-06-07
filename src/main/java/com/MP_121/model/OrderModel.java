@@ -15,6 +15,10 @@ public class OrderModel {
     private UsersModel buyer;
 
     @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private UsersModel seller;
+
+    @ManyToOne
     @JoinColumn(name = "productId")
     private ProductModel productId;
 

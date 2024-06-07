@@ -4,48 +4,86 @@
     <meta charset="UTF-8">
     <title>Seller Orders</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url(https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHx8MA%3D%3D) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            position: relative;
+            height: 100%;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            -webkit-text-stroke-width: 0.25px;
+            -webkit-text-stroke-color: white;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
         }
-        table, th, td {
-            border: 1px solid black;
+
+        th, td {
+            border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
+        }
+
+        td {
+            background-color: #ffffff;
         }
     </style>
 </head>
 <body>
-<h1>Seller Orders</h1>
+<div class="container">
+    <h1>Seller Orders</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>Order ID</th>
-        <th>Buyer Name</th>
-        <th>Email</th>
-        <th>Product Name</th>
-        <th>Quantity</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Loop through orders -->
-    <tr th:each="order : ${orders}">
-        <td th:text="${order.id}"></td>
-        <td th:text="${order.buyer.name}"></td>
-        <td th:text="${order.buyer.email}"></td>
-        <td th:text="${order.product.name}"></td>
-        <td th:text="${order.quantity}"></td>
-        <td>
-            <a th:href="@{/seller/orders/edit/{orderId}(orderId=${order.id})}">Edit</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+    <table>
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Buyer Name</th>
+            <th>Email</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through orders -->
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.buyer.name}"></td>
+            <td th:text="${order.buyer.email}"></td>
+            <td th:text="${order.product.name}"></td>
+            <td th:text="${order.quantity}"></td>
+            <td>
+                <a th:href="@{/seller/orders/edit/{orderId}(orderId=${order.id})}">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

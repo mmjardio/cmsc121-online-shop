@@ -4,46 +4,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buyer Dashboard</title>
     <style>
-        /* Basic styling for demonstration */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+        html {
+            /* background-color: rgba(243, 233, 225, 0.85);*/
+            background: url(https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHx8MA%3D%3D) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            position: relative;
+            height: 100%;
         }
+
+        body {
+            font-family: "Arial", sans-serif;
+            margin: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: rgba(55, 37, 27, 1);
+            text-align: center;
+            margin-bottom: 20px;
+            -webkit-text-stroke-width: 0.5px;
+            -webkit-text-stroke-color: white;
+        }
+
+        label {
+            color: rgba(109, 76, 65, 1);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(109, 76, 65, 1);
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: rgba(109, 76, 65, 1);;
+            color: rgba(255, 255, 255, 1);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: rgba(84, 62, 51, 1);
+        }
+
         .product-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
+            background-color: rgb(243, 233, 225, 0.5);
+            opacity: 1;
+            border-radius: 8px;
+            padding: 20px;
         }
+
         .product-card {
-            border: 1px solid #ccc;
+            border: 1px solid rgba(109, 76, 65, 1);
             border-radius: 8px;
             padding: 16px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.5);
         }
+
         .product-card h3 {
-            margin-top: 0;
+            color: rgba(109, 76, 65, 1);
         }
-        .product-card p {
-            margin-bottom: 10px;
-        }
+
         .cart-container {
             margin-top: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid rgba(109, 76, 65, 1);
             border-radius: 8px;
             padding: 16px;
-            background-color: #f9f9f9;
+            background-color: rgba(255, 255, 255, 0.5);
         }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .cart-item span {
-            flex: 1;
-        }
+
         .cart-item button {
-            margin-left: 10px;
+            background-color: rgba(229, 115, 115, 1);
+            color: rgba(255, 255, 255, 1);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart-item button:hover {
+            background-color: rgba(198, 40, 40, 1);
+        }
+
+        .check-out-button button {
+            background-color: rgba(0, 150, 136, 1);
+            color: rgba(255, 255, 255, 1);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .check-out-button button:hover {
+            background-color: rgba(0, 121, 107, 1);
         }
     </style>
 </head>
@@ -86,7 +155,9 @@
         </div>
         <!-- Repeat cart items for each item in the cart -->
     </div>
+    <div class="check-out-button">
     <button onclick="checkoutCart()">Checkout</button>
+    </div>
 </div>
 
 <script>

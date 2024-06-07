@@ -37,9 +37,4 @@ public class ProductController {
         productService.deleteItem(productId);
     }
 
-    @GetMapping("/seller/{sellerId}")
-    public List<ProductModel> getItemsBySeller(@PathVariable Long sellerId) {
-        return productService.getItemsBySeller(sellerId);
-    }
-
 }

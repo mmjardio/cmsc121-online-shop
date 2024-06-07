@@ -2,6 +2,8 @@ package com.MP_121.controller;
 
 import com.MP_121.model.UsersModel;
 import com.MP_121.service.AuthenticationService;
+import com.MP_121.service.UsersService;
+import jakarta.servlet.http.HttpSession;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,31 +33,30 @@ public class LoginController {
         return "seller_login_page"; // seller/login.html template
     }
 
-    @PostMapping("/authenticate-seller")
-    public String authenticateSeller(@RequestParam String email, @RequestParam String password, Model model) {
-        Optional<UsersModel> userOptional = authenticationService.authenticate(email, password);
-        if (userOptional.isPresent() && "Seller".equals(userOptional.get().getRole())) {
+    @Autowired
+    private UsersService usersService;
+
+    @PostMapping("/buyer")
+    public String loginBuyer(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        UsersModel user = usersService.authenticate(email, password);
+        if (user != null && "Buyer".equals(user.getRole())) {
+            session.setAttribute("user", user);
+            return "redirect:/buyer/dashboard";
+        } else {
+            model.addAttribute("error", "Invalid buyer credentials.");
+            return "buyer_login_page";
+        }
+    }
+
+    @PostMapping("/seller")
+    public String loginSeller(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        UsersModel user = usersService.authenticate(email, password);
+        if (user != null && "Seller".equals(user.getRole())) {
+            session.setAttribute("user", user);
             return "redirect:/seller/dashboard";
         } else {
-            return "redirect:/seller/login";
+            model.addAttribute("error", "Invalid seller credentials.");
+            return "seller_login_page";
         }
     }
-
-    @PostMapping("/authenticate-buyer")
-    public String authenticateBuyer(@RequestParam String email, @RequestParam String password, Model model) {
-        Optional<UsersModel> userOptional = authenticationService.authenticate(email, password);
-        if (userOptional.isPresent()) {
-            UsersModel user = userOptional.get();
-            if ("Buyer".equals(user.getRole())) {
-                return "redirect:/buyer/dashboard";
-            } else {
-                // Redirect to a specific error page for role mismatch
-                return "redirect:/buyer/login";
-            }
-        } else {
-            // Handle authentication failure
-            return "redirect:/login?error=auth";
-        }
-    }
-
 }
