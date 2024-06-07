@@ -26,7 +26,7 @@ public class UsersModel {
     String role;
 
     @OneToMany(mappedBy = "seller")
-    private List<ProductModel> items;
+    private List<ProductModel> products;
 
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartModel> cartItems;
@@ -94,5 +94,29 @@ public class UsersModel {
                 ", userEmail='" + email + '\'' +
                 ", userRole='" + role + '\'' +
                 '}';
+    }
+
+    public List<ProductModel> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductModel> products) {
+        this.products = products;
+    }
+
+    public List<CartModel> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartModel> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public List<OrderModel> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderModel> orders) {
+        this.orders = orders;
     }
 }
