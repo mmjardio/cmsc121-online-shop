@@ -28,6 +28,11 @@ public class UsersModel {
     @OneToMany(mappedBy = "seller")
     private List<ProductModel> items;
 
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartModel> cartItems;
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderModel> orders;
+
     public Long getId() {
         return id;
     }

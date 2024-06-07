@@ -1,6 +1,7 @@
 package com.MP_121.model;
 
 import jakarta.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "product_table")
@@ -21,7 +22,10 @@ public class ProductModel {
 
     @ManyToOne
     @JoinColumn(name = "seller_id")
-    private UsersModel sellerId;
+    private UsersModel seller;
+
+    @OneToMany(mappedBy = "product")
+    private List<CartModel> cartItems;
 
     public Long getId() {
         return id;
@@ -56,11 +60,19 @@ public class ProductModel {
     }
 
     public UsersModel getSellerId() {
-        return sellerId;
+        return seller;
     }
 
     public void setSellerId(UsersModel sellerId) {
-        this.sellerId = sellerId;
+        this.seller = sellerId;
+    }
+
+    public List<CartModel> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartModel> cartItems) {
+        this.cartItems = cartItems;
     }
 }
 

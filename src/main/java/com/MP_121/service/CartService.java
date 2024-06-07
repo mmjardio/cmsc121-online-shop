@@ -1,6 +1,7 @@
 package com.MP_121.service;
 
 import com.MP_121.model.CartModel;
+import com.MP_121.model.UsersModel;
 import com.MP_121.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +17,16 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public List<CartModel> getCartItems(Long buyerId) {
-        return cartRepository.findByBuyerId(buyerId);
+    public List<CartModel> getCartItems(UsersModel buyerId) {
+        return cartRepository.findByBuyer(buyerId);
     }
 
     public void removeItemFromCart(Long cartId) {
         cartRepository.deleteById(cartId);
     }
 
-    public void clearCart(Long buyerId) {
-        List<CartModel> cartItems = cartRepository.findByBuyerId(buyerId);
+    public void clearCart(UsersModel buyerId) {
+        List<CartModel> cartItems = cartRepository.findByBuyer(buyerId);
         cartRepository.deleteAll(cartItems);
     }
 

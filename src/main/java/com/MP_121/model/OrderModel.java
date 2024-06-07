@@ -29,12 +29,12 @@ public class OrderModel {
         this.id = id;
     }
 
-    public UsersModel getBuyer() {
+    public UsersModel getBuyerId() {
         return buyer;
     }
 
-    public void setBuyer(UsersModel buyer) {
-        this.buyer = buyer;
+    public void setBuyerId(UsersModel buyerId) {
+        this.buyer = buyerId;
     }
 
     public ProductModel getProductId() {

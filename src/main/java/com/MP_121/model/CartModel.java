@@ -13,11 +13,11 @@ public class CartModel {
 
     @ManyToOne
     @JoinColumn(name = "buyerId")
-    private UsersModel buyerId;
+    private UsersModel buyer;
 
     @ManyToOne
     @JoinColumn(name = "productId")
-    private ProductModel productId;
+    private ProductModel product;
 
     @Column(name="quantity")
     private int quantity;
@@ -31,19 +31,19 @@ public class CartModel {
     }
 
     public UsersModel getBuyerId() {
-        return buyerId;
+        return buyer;
     }
 
     public void setBuyerId(UsersModel buyerId) {
-        this.buyerId = buyerId;
+        this.buyer = buyerId;
     }
 
     public ProductModel getProductId() {
-        return productId;
+        return product;
     }
 
     public void setProductId(ProductModel productId) {
-        this.productId = productId;
+        this.product = productId;
     }
 
     public int getQuantity() {

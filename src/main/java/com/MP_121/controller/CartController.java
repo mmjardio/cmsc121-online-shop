@@ -1,6 +1,7 @@
 package com.MP_121.controller;
 
 import com.MP_121.model.CartModel;
+import com.MP_121.model.UsersModel;
 import com.MP_121.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class CartController {
     }
 
     @GetMapping("/{buyerId}")
-    public List<CartModel> getCartItems(@PathVariable Long buyerId) {
+    public List<CartModel> getCartItems(@PathVariable UsersModel buyerId) {
         return cartService.getCartItems(buyerId);
     }
 

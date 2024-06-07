@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.*;
 
 public interface ProductRepository extends JpaRepository<ProductModel, Long> {
-    List<ProductModel> findBySellerId(Long sellerId);
+    List<ProductModel> findBySeller_Id(Long sellerId);
     List<ProductModel> findByNameContainingIgnoreCase(String name);
 }

@@ -22,7 +22,7 @@ public class ProductService {
     }
 
     public List<ProductModel> getItemsBySeller(Long sellerId) {
-        return productRepository.findBySellerId(sellerId);
+        return productRepository.findBySeller_Id(sellerId);
     }
 
     public List<ProductModel> getAllItems() {
