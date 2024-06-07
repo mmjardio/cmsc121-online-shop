@@ -37,19 +37,25 @@ public class BuyerController {
     }
 
     @GetMapping("/dashboard")
-    public String showDashboard(HttpSession session, Model model) {
+    public String showDashboard(@RequestParam(value = "search", required = false) String search, Model model, HttpSession session) {
         UsersModel buyer = (UsersModel) session.getAttribute("user");
-        if (buyer != null && "Buyer".equals(buyer.getRole())) {
-            List<ProductModel> products = productService.getAllItems();
-            List<CartModel> cartItems = cartService.getCartItems(buyer);
-            model.addAttribute("products", products);
-            model.addAttribute("cartItems", cartItems);
-            return "buyer_dashboard"; // Displays buyer_dashboard.html template
-        } else {
-            model.addAttribute("error", "You must be logged in as a buyer to view this page");
-            return "login"; // Redirects to login page if buyer is not logged in
+        if (buyer == null || !"Buyer".equals(buyer.getRole())) {
+            model.addAttribute("error", "You must be logged in as a buyer to view the dashboard.");
+            return "buyer_login_page";
         }
 
+        List<ProductModel> products;
+        if (search != null && !search.isEmpty()) {
+            products = productService.searchItemsByName(search);
+        } else {
+            products = productService.getAllItems();
+        }
+
+        List<CartModel> cartItems = cartService.getCartItemsByBuyer(buyer);
+
+        model.addAttribute("products", products);
+        model.addAttribute("cartItems", cartItems);
+        return "buyer_dashboard";
     }
 
     @GetMapping("/products")
@@ -120,25 +126,30 @@ public class BuyerController {
         }
     }
 
-    @DeleteMapping("/cart/remove/{cartId}")
-    public ResponseEntity<String> removeCartItem(@PathVariable Long cartId, HttpSession session) {
+    @RequestMapping(value="/cart/remove/{cartId}", method={RequestMethod.DELETE, RequestMethod.GET})
+    public String removeCartItem(@PathVariable Long cartId, HttpSession session) {
         UsersModel buyer = (UsersModel) session.getAttribute("user");
         if (buyer != null && "Buyer".equals(buyer.getRole())) {
             cartService.removeItemFromCart(cartId);
-            return ResponseEntity.ok("Cart item removed successfully");
+            return "redirect:/buyer/dashboard"; // Redirect to buyer dashboard
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must be logged in as a buyer to remove from cart");
+            // Handle unauthorized access
+            return "redirect:/login"; // Redirect to login page or error page
         }
     }
 
     @PostMapping("/cart/checkout")
-    public ResponseEntity<String> checkoutCart(HttpSession session) {
+    public String checkoutCart(HttpSession session, Model model) {
         UsersModel buyer = (UsersModel) session.getAttribute("user");
-        if (buyer != null && "Buyer".equals(buyer.getRole())) {
-            cartService.checkoutCart(buyer);
-            return ResponseEntity.ok("Checkout successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must be logged in as a buyer to checkout");
+        if (buyer == null || !"Buyer".equals(buyer.getRole())) {
+            model.addAttribute("error", "You must be logged in as a buyer to checkout.");
+            return "buyer_login_page"; // Redirect to login page if buyer is not logged in
         }
+
+        // Perform the checkout process
+        cartService.checkoutCart(buyer);
+
+        // Redirect to buyer dashboard or order confirmation page
+        return "redirect:/buyer/dashboard"; // or "order_confirmation_page"
     }
 }

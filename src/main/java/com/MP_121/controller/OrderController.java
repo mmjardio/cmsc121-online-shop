@@ -20,7 +20,7 @@ public class OrderController {
     @PostMapping("/place")
     public OrderModel placeOrder(@RequestBody OrderModel order) {
         // Assuming an order is placed from items in the cart
-        cartService.clearCart(order.getBuyerId());
+        cartService.clearCart(order.getBuyer());
         return orderService.placeOrder(order);
     }
 

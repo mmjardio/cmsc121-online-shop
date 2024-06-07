@@ -74,9 +74,9 @@
         <!-- Loop through orders -->
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
-            <td th:text="${order.buyer.name}"></td>
+            <td th:text="${order.buyer.login}"></td>
             <td th:text="${order.buyer.email}"></td>
-            <td th:text="${order.product.name}"></td>
+            <td th:text="${order.productId.name}"></td>
             <td th:text="${order.quantity}"></td>
             <td>
                 <a th:href="@{/seller/orders/edit/{orderId}(orderId=${order.id})}">Edit</a>

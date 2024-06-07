@@ -120,6 +120,11 @@
 <body>
 <div>
     <h1>Buyer Dashboard</h1>
+    <form th:action="@{/buyer/dashboard}" method="get">
+        <input type="text" name="search" placeholder="Search products..." />
+        <button type="submit">Search</button>
+    </form>
+
     <h2>Products</h2>
     <table>
         <thead>
@@ -158,15 +163,17 @@
             <td th:text="${cartItem.product.name}">Product Name</td>
             <td th:text="${cartItem.quantity}">Quantity</td>
             <td>
-                <a th:href="@{/buyer/cart/remove/{cartId}(cartId=${cartItem.id})}">Remove</a>
+            <td>
+                <a th:href="@{/buyer/cart/remove/{cartId}(cartId=${cartItem.id})}" data-method="delete">Remove</a>
+            </td>
             </td>
         </tr>
         </tbody>
     </table>
 
-    <div class="btn">
-        <a th:href="@{/buyer/cart/checkout}">Checkout</a>
-    </div>
+    <form th:action="@{/buyer/cart/checkout}" method="post">
+        <button type="submit">Checkout</button>
+    </form>
 </div>
 </body>
 </html>
