@@ -4,11 +4,13 @@ import com.MP_121.model.UsersModel;
 import com.MP_121.service.AuthenticationService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@Controller
 public class LoginController {
     @Autowired
     private AuthenticationService authenticationService;
