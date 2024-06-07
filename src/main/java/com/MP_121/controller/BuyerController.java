@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/buyer")
@@ -53,8 +54,17 @@ public class BuyerController {
 
         List<CartModel> cartItems = cartService.getCartItemsByBuyer(buyer);
 
+        List<Double> cartCosts = cartItems.stream()
+                .map(item -> item.getProduct().getPrice() * item.getQuantity())
+                .collect(Collectors.toList());
+
+        double totalCost = cartItems.stream()
+                .mapToDouble(cartItem -> cartItem.getProduct().getPrice() * cartItem.getQuantity())
+                .sum();
+
         model.addAttribute("products", products);
         model.addAttribute("cartItems", cartItems);
+        model.addAttribute("totalCost", totalCost);
         return "buyer_dashboard";
     }
 
@@ -97,6 +107,11 @@ public class BuyerController {
         if (product == null) {
             model.addAttribute("error", "Product not found.");
             return "error_page"; // Handle case where product is not found
+        }
+
+        if (cartItem.getQuantity() < 0) {
+            model.addAttribute("error", "Quantity cannot be negative.");
+            return "error_page"; // Handle invalid quantity
         }
 
         // Set the product and buyer in cartItem

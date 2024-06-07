@@ -190,6 +190,7 @@
         <tr th:each="cartItem : ${cartItems}">
             <td th:text="${cartItem.id}">ID</td>
             <td th:text="${cartItem.product.name}">Product Name</td>
+            <td th:text="${cartItem.product.price}">Price</td>
             <td th:text="${cartItem.quantity}">Quantity</td>
             <td>
                 <a th:href="@{/buyer/cart/remove/{cartId}(cartId=${cartItem.id})}" data-method="delete">Remove</a>
@@ -197,6 +198,9 @@
         </tr>
         </tbody>
     </table>
+    <div>
+        <h3>Total Cost of Cart: <span th:text="${totalCost}"></span></h3>
+    </div>
 
     <form th:action="@{/buyer/cart/checkout}" method="post">
         <button type="submit">Checkout</button>

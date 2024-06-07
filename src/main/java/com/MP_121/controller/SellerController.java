@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/seller")
@@ -143,7 +145,13 @@ public class SellerController {
         UsersModel seller = (UsersModel) session.getAttribute("user");
         if (seller != null && "Seller".equals(seller.getRole())) {
             List<OrderModel> orders = orderService.getOrdersBySeller(seller);
+            Map<Long, Double> orderCosts = new HashMap<>();
+            for (OrderModel order : orders) {
+                double cost = order.getProductId().getPrice() * order.getQuantity();
+                orderCosts.put(order.getId(), cost);
+            }
             model.addAttribute("orders", orders);
+            model.addAttribute("orderCosts", orderCosts);
         } else {
             model.addAttribute("error", "You must be logged in as a seller to view orders.");
         }

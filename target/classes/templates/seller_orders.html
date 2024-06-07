@@ -67,7 +67,7 @@
             <th>Email</th>
             <th>Product Name</th>
             <th>Quantity</th>
-            <th>Action</th>
+            <th>Cost</th>
         </tr>
         </thead>
         <tbody>
@@ -78,6 +78,7 @@
             <td th:text="${order.buyer.email}"></td>
             <td th:text="${order.productId.name}"></td>
             <td th:text="${order.quantity}"></td>
+            <td th:text="${orderCosts[order.id]}"></td>
         </tr>
         </tbody>
     </table>
