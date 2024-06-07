@@ -158,7 +158,7 @@
             <td th:text="${cartItem.product.name}">Product Name</td>
             <td th:text="${cartItem.quantity}">Quantity</td>
             <td>
-                <a th:href="@{/buyer/cart/remove/{cartId}(cartId=${cartItem.id})}">Remove</a>
+                <a th:href="@{/buyer/cart/remove/{cartId}(cartId=${cartItem.id})}" data-method="delete">Remove</a>
             </td>
         </tr>
         </tbody>
