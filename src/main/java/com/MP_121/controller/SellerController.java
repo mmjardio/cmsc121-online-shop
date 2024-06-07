@@ -19,7 +19,7 @@ public class SellerController {
         this.productService = productService;
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/seller/dashboard")
     public String showDashboard(Model model) {
         // Fetch all products belonging to the logged-in seller
         List<ProductModel> products = productService.getAllItems();

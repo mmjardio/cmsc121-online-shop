@@ -28,12 +28,12 @@ public class LoginController {
             UsersModel user = userOptional.get();
             String role = user.getRole();
 
-            if ("BUYER".equals(role)) {
+            if ("Buyer".equals(role)) {
                 // Redirect to buyer dashboard
-                return "redirect:/buyer/dashboard";
-            } else if ("SELLER".equals(role)) {
+                return "buyer_dashboard";
+            } else if ("Seller".equals(role)) {
                 // Redirect to seller dashboard
-                return "redirect:/seller/dashboard";
+                return "seller_dashboard";
             } else {
                 // Handle other roles if necessary
                 return "redirect:/login?error=role";
