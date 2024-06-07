@@ -1,36 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Add Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url(https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHx8MA%3D%3D) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            position: relative;
+            height: 100%;
+        }
+
+        h1 {
+            color: rgba(55, 37, 27, 1);
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            -webkit-text-stroke-width: 0.25px;
+            -webkit-text-stroke-color: white;
+        }
+
+        form {
+            width: 50%;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            color: rgba(109, 76, 65, 1);
+        }
+
+        input[type="text"] {
+            opacity: 80%;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            opacity: 80%;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            height: 100px;
+            resize: none;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(109, 76, 65, 1);
+            color: rgba(255, 255, 255, 1);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgba(93, 64, 55, 1);
+        }
+    </style>
 </head>
 <body>
-<h1>Add a New Product</h1>
+<h1>ADD PRODUCT</h1>
 
-<!-- Display error message if there is any -->
-<div th:if="${error}" th:text="${error}" style="color: red;"></div>
+<form action="/seller/products/add" method="post" th:object="${product}">
+    <!-- Input fields for product -->
+    <label>Name:</label><br>
+    <input type="text" th:field="*{name}"><br><br>
+    <label for="description">Product Description:</label><br>
+    <textarea id="description" name="description" required></textarea><br>
+    <label>Price:</label><br>
+    <input type="text" th:field="*{price}"><br><br>
 
-<!-- Form for adding a new product -->
-<form action="/seller/products/add" method="post">
-    <div>
-        <label for="name">Product Name:</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-        <label for="description">Product Description:</label>
-        <textarea id="description" name="description" required></textarea>
-    </div>
-    <div>
-        <label for="price">Product Price:</label>
-        <input type="number" step="0.01" id="price" name="price" required>
-    </div>
-    <div>
-        <button type="submit">Add Product</button>
-    </div>
+    <input type="submit" value="Add Product">
 </form>
-
-<!-- Link to go back to the seller dashboard -->
-<div>
-    <a href="/seller/dashboard">Back to Dashboard</a>
-</div>
 </body>
 </html>
