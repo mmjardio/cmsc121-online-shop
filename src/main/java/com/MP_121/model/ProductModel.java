@@ -27,6 +27,16 @@ public class ProductModel {
     @OneToMany(mappedBy = "product")
     private List<CartModel> cartItems;
 
+    public ProductModel() {
+    }
+
+    public ProductModel(String name, String description, UsersModel seller) {
+        this.name = name;
+        this.description = description;
+        this.seller = seller;
+    }
+
+
     public Long getId() {
         return id;
     }

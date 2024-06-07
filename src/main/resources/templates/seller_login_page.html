@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Login</title>
+</head>
+<body>
+<h1>Seller Login</h1>
+
+<form action="/authenticate-seller" method="post">
+    <!-- Input fields for email and password -->
+    <label>Email:</label><br>
+    <input type="text" name="email"><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password"><br><br>
+
+    <input type="submit" value="Login">
+</form>
+</body>
+</html>

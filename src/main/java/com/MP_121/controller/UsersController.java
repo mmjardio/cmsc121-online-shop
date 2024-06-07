@@ -22,7 +22,7 @@ public class UsersController {
         return "register_page";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/loginold")
     public String getLoginPage(Model model){
         model.addAttribute("loginRequest", new UsersModel());
         return "login_page";
@@ -33,7 +33,7 @@ public class UsersController {
         return usersService.registerUser(login, email, password, role);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginold")
     public UsersModel authenticateUser(@RequestParam String email, @RequestParam String password) {
         return usersService.authenticate(email, password);
     }
