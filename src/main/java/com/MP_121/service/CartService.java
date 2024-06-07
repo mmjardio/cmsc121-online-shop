@@ -17,10 +17,13 @@ public class CartService {
     @Autowired
     private final CartRepository cartRepository;
 
+    @Autowired
     private final OrderRepository orderRepository;
 
     @Autowired
     private final ProductService productService;
+
+    @Autowired
     private final UsersService usersService;
 
     @Autowired
@@ -62,11 +65,29 @@ public class CartService {
     }
 
 
-    // Method to checkout the cart (process the order)
+    @Transactional
+    public List<CartModel> getCartItemsByBuyer(UsersModel buyer) {
+        return cartRepository.findAllByBuyer(buyer);
+    }
+
     public void checkoutCart(UsersModel buyer) {
         List<CartModel> cartItems = cartRepository.findAllByBuyer(buyer);
-        // Perform checkout logic, such as creating orders, updating inventory, etc.
-        // For demonstration purposes, we will just delete the cart items after checkout
+        createOrders(cartItems, buyer);
+        deleteCartItems(cartItems);
+    }
+
+    private void createOrders(List<CartModel> cartItems, UsersModel buyer) {
+        for (CartModel cartItem : cartItems) {
+            OrderModel order = new OrderModel();
+            order.setBuyer(buyer);
+            order.setSeller(cartItem.getProduct().getSellerId());
+            order.setProductId(cartItem.getProduct());
+            order.setQuantity(cartItem.getQuantity());
+            orderRepository.save(order);
+        }
+    }
+
+    private void deleteCartItems(List<CartModel> cartItems) {
         cartRepository.deleteAll(cartItems);
     }
 

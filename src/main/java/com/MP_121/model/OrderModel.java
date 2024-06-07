@@ -33,12 +33,20 @@ public class OrderModel {
         this.id = id;
     }
 
-    public UsersModel getBuyerId() {
+    public UsersModel getBuyer() {
         return buyer;
     }
 
-    public void setBuyerId(UsersModel buyerId) {
-        this.buyer = buyerId;
+    public void setBuyer(UsersModel buyer) {
+        this.buyer = buyer;
+    }
+
+    public UsersModel getSeller() {
+        return seller;
+    }
+
+    public void setSeller(UsersModel seller) {
+        this.seller = seller;
     }
 
     public ProductModel getProductId() {
