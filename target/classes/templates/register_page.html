@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thym.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Register Page</title>
     <link rel="stylesheet" href="/css/register.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check if the success message exists
+            var successMessage = [[${success}]];
+            if (successMessage) {
+                alert(successMessage); // Show the popup message
+            }
+        });
+    </script>
 </head>
 <body>
+<div class="nav">
+    <nav>
+        <a href="/welcome">
+            <img src="/images/logo.png" alt="Logo" class="logo">
+        </a>
+    </nav>
+</div>
+
 <div class="form">
     <form method="post" action="/register" th:object="${registerRequest}">
         <h2>Sign Up</h2>
+        <div th:if="${success}" th:text="${success}"></div>
+
+        <!-- Display Error Message -->
+        <div th:if="${error}" th:text="${error}"></div>
         <div class="input-box">
             <i class="fa fa-user" aria-hidden="true"></i>
             <input type="text" name="login" placeholder="Your Name Here" required>
@@ -25,8 +47,8 @@
             <i class="fa fa-user" aria-hidden="true"></i>
             <label for="role">Role:</label>
             <select id="role" name="role" required>
-                <option value = "Seller">Seller</option>
-                <option value = "Buyer">Buyer</option>
+                <option value="Seller">Seller</option>
+                <option value="Buyer">Buyer</option>
             </select>
         </div>
 
