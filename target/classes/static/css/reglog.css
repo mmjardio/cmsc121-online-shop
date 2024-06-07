@@ -1,22 +1,25 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: url(https://picsum.photos/3000/2000/?image=1015);
-    background-size: cover;
-    background-repeat: no-repeat;
+html {
+  background-color: #10151B;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+  height: 100%;
 }
 
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    background-color: #03a9f4;
-    opacity: 0.8;
+html::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Adjust the opacity to make the background darker or lighter */
+  z-index: 0;
 }
+
+
 
 .form {
     position: absolute;

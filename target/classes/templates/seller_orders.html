@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Orders</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Seller Orders</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Buyer Name</th>
+        <th>Email</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through orders -->
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.buyer.name}"></td>
+        <td th:text="${order.buyer.email}"></td>
+        <td th:text="${order.product.name}"></td>
+        <td th:text="${order.quantity}"></td>
+        <td>
+            <a th:href="@{/seller/orders/edit/{orderId}(orderId=${order.id})}">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
