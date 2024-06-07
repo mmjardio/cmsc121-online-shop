@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Quantity</title>
+</head>
+<body>
+<div>
+    <h1>Select Quantity</h1>
+    <form th:object="${cartItem}" th:action="@{/buyer/cart/add/{productId}(productId=${productId})}" method="post">
+        <input type="hidden" th:field="*{product.id}" /> <!-- Bind productId in CartModel -->
+        <input type="number" th:field="*{quantity}" /> <!-- Quantity input -->
+        <button type="submit">Add to Cart</button>
+    </form>
+</div>
+</body>
+</html>

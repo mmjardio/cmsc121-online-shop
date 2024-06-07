@@ -14,9 +14,12 @@ import java.util.*;
 @Service
 public class CartService {
 
+    @Autowired
     private final CartRepository cartRepository;
 
     private final OrderRepository orderRepository;
+
+    @Autowired
     private final ProductService productService;
     private final UsersService usersService;
 
@@ -28,65 +31,42 @@ public class CartService {
         this.usersService = usersService;
     }
 
-    public CartModel addItemToCart(Long productId, String email, String password) {
+
+    public CartModel addItemToCart(Long productId, UsersModel buyer) {
         ProductModel product = productService.getItemById(productId);
-        UsersModel buyer = usersService.authenticate(email, password);
-
-        if (product == null) {
-            throw new RuntimeException("Product not found with id: " + productId);
+        if (product != null) {
+            CartModel cartItem = cartRepository.findByProductAndBuyer(product, buyer);
+            if (cartItem != null) {
+                cartItem.setQuantity(cartItem.getQuantity() + 1);
+            } else {
+                cartItem = new CartModel();
+                cartItem.setProduct(product);
+                cartItem.setBuyer(buyer);
+                cartItem.setQuantity(1);
+            }
+            return cartRepository.save(cartItem);
         }
-
-        if (buyer == null) {
-            throw new RuntimeException("Invalid credentials or buyer not found for email: " + email);
-        }
-
-        CartModel cart = new CartModel();
-        cart.setProductId(product);
-        cart.setBuyerId(buyer);
-
-        return cartRepository.save(cart);
+        return null; // Handle the case where the product is not found
     }
 
-    public List<CartModel> getCartItems(String email, String password) {
-        UsersModel buyer = usersService.authenticate(email, password);
-
-        if (buyer == null) {
-            throw new RuntimeException("Invalid credentials or buyer not found for email: " + email);
-        }
-
-        return cartRepository.findByBuyer(buyer);
+    public List<CartModel> getCartItems(UsersModel buyer) {
+        return cartRepository.findAllByBuyer(buyer);
     }
 
     public void removeItemFromCart(Long cartId) {
         cartRepository.deleteById(cartId);
     }
-
-    @Transactional
-    public void checkoutCart(String email, String password) {
-        UsersModel buyer = usersService.authenticate(email, password);
-
-        if (buyer == null) {
-            throw new RuntimeException("Invalid credentials or buyer not found for email: " + email);
-        }
-
-        List<CartModel> cartItems = cartRepository.findByBuyer(buyer);
-
-        for (CartModel cartItem : cartItems) {
-            OrderModel order = new OrderModel();
-            order.setBuyerId(buyer); // Set the buyer
-            order.setProductId(cartItem.getProductId()); // Set the product associated with the cart item
-            order.setQuantity(cartItem.getQuantity()); // Set the quantity
-
-            // Optionally, set any other attributes specific to your OrderModel
-
-            orderRepository.save(order); // Save the order to the database
-        }
-
-        cartRepository.deleteAll(cartItems); // Clear the cart after checkout
+    public void clearCart(UsersModel buyer) {
+        List<CartModel> cartItems = cartRepository.findAllByBuyer(buyer);
+        cartRepository.deleteAll(cartItems);
     }
 
-    public void clearCart(UsersModel buyerId) {
-        List<CartModel> cartItems = cartRepository.findByBuyer(buyerId);
+
+    // Method to checkout the cart (process the order)
+    public void checkoutCart(UsersModel buyer) {
+        List<CartModel> cartItems = cartRepository.findAllByBuyer(buyer);
+        // Perform checkout logic, such as creating orders, updating inventory, etc.
+        // For demonstration purposes, we will just delete the cart items after checkout
         cartRepository.deleteAll(cartItems);
     }
 

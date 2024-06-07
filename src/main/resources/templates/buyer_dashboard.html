@@ -1,4 +1,5 @@
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -117,94 +118,55 @@
     </style>
 </head>
 <body>
-<h1>Welcome to Buyer Dashboard</h1>
+<div>
+    <h1>Buyer Dashboard</h1>
+    <h2>Products</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}">ID</td>
+            <td th:text="${product.name}">Name</td>
+            <td th:text="${product.price}">Price</td>
+            <td>
+                <a th:href="@{/buyer/cart/add/{productId}(productId=${product.id})}">Add to Cart</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-<!-- Product Search Form -->
-<form action="/products/search" method="get">
-    <label for="search">Search Products:</label>
-    <input type="text" id="search" name="keyword">
-    <button type="submit">Search</button>
-</form>
+    <h2>Cart Items</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartItem : ${cartItems}">
+            <td th:text="${cartItem.id}">ID</td>
+            <td th:text="${cartItem.product.name}">Product Name</td>
+            <td th:text="${cartItem.quantity}">Quantity</td>
+            <td>
+                <a th:href="@{/buyer/cart/remove/{cartId}(cartId=${cartItem.id})}">Remove</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-<!-- Product Display Container -->
-<div class="product-container">
-    <!-- Product Cards (Generated dynamically from backend) -->
-    <!-- Example: Replace with Thymeleaf iteration if using Spring Boot Thymeleaf -->
-    <div class="product-card">
-        <h3>Product Name</h3>
-        <p>Product Description</p>
-        <p>Price: $X.XX</p>
-        <form action="/cart/add/{productId}" method="post">
-            <input type="number" name="quantity" value="1" min="1" max="10">
-            <button type="submit">Add to Cart</button>
-        </form>
+    <div class="btn">
+        <a th:href="@{/buyer/cart/checkout}">Checkout</a>
     </div>
-    <!-- Repeat product cards for each product -->
 </div>
-
-<!-- Cart Display -->
-<div class="cart-container">
-    <h2>Shopping Cart</h2>
-    <div class="cart-items">
-        <!-- Cart Items (Generated dynamically from backend) -->
-        <!-- Example: Replace with Thymeleaf iteration if using Spring Boot Thymeleaf -->
-        <div class="cart-item">
-            <span>Product Name</span>
-            <span>Quantity: X</span>
-            <button onclick="removeFromCart({{cartItem.id}})">Remove</button>
-        </div>
-        <!-- Repeat cart items for each item in the cart -->
-    </div>
-    <div class="check-out-button">
-    <button onclick="checkoutCart()">Checkout</button>
-    </div>
-</div>
-
-<script>
-    // JavaScript functions for interaction (Optional: Replace with Angular/React/Vue components if preferred)
-    function removeFromCart(cartId) {
-        // Implement logic to remove item from cart via AJAX request
-        fetch('/cart/remove/' + cartId, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                // Reload or update cart display after successful removal
-                location.reload();
-            } else {
-                console.error('Failed to remove item from cart');
-            }
-        }).catch(error => {
-            console.error('Error removing item from cart:', error);
-        });
-    }
-
-    function checkoutCart() {
-        // Implement logic to checkout cart via AJAX request
-        fetch('/cart/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: 'buyer@example.com', // Replace with actual buyer email
-                password: 'buyerpassword' // Replace with actual buyer password
-            })
-        }).then(response => {
-            if (response.ok) {
-                // Optionally handle success message or redirect after checkout
-                alert('Checkout successful!');
-                // Example: Redirect to order history page
-                window.location.href = '/buyer/orders';
-            } else {
-                console.error('Failed to checkout cart');
-            }
-        }).catch(error => {
-            console.error('Error checking out cart:', error);
-        });
-    }
-</script>
 </body>
 </html>

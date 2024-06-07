@@ -30,20 +30,20 @@ public class CartModel {
         this.id = id;
     }
 
-    public UsersModel getBuyerId() {
+    public UsersModel getBuyer() {
         return buyer;
     }
 
-    public void setBuyerId(UsersModel buyerId) {
-        this.buyer = buyerId;
+    public void setBuyer(UsersModel buyer) {
+        this.buyer = buyer;
     }
 
-    public ProductModel getProductId() {
+    public ProductModel getProduct() {
         return product;
     }
 
-    public void setProductId(ProductModel productId) {
-        this.product = productId;
+    public void setProduct(ProductModel product) {
+        this.product = product;
     }
 
     public int getQuantity() {
