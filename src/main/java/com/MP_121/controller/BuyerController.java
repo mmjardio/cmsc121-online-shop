@@ -99,21 +99,18 @@ public class BuyerController {
             return "error_page"; // Handle case where product is not found
         }
 
-        // Initialize cartItem if not already initialized
-        if (cartItem == null) {
-            cartItem = new CartModel();
-        }
-
         // Set the product and buyer in cartItem
         cartItem.setProduct(product);
         cartItem.setBuyer(buyer);
 
-        // Add the cartItem to the cart
-        cartService.addItemToCart(productId, buyer);
+        // Add the cartItem to the cart with the specified quantity
+        cartService.addItemToCart(productId, buyer, cartItem.getQuantity());
 
         // Redirect to buyer dashboard or cart view
         return "redirect:/buyer/dashboard";
     }
+
+
 
     @GetMapping("/cart")
     public ResponseEntity<List<CartModel>> getCartItems(HttpSession session) {

@@ -34,18 +34,17 @@ public class CartService {
         this.usersService = usersService;
     }
 
-
-    public CartModel addItemToCart(Long productId, UsersModel buyer) {
+    public CartModel addItemToCart(Long productId, UsersModel buyer, int quantity) {
         ProductModel product = productService.getItemById(productId);
         if (product != null) {
             CartModel cartItem = cartRepository.findByProductAndBuyer(product, buyer);
             if (cartItem != null) {
-                cartItem.setQuantity(cartItem.getQuantity() + 1);
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
             } else {
                 cartItem = new CartModel();
                 cartItem.setProduct(product);
                 cartItem.setBuyer(buyer);
-                cartItem.setQuantity(1);
+                cartItem.setQuantity(quantity);
             }
             return cartRepository.save(cartItem);
         }
@@ -59,11 +58,11 @@ public class CartService {
     public void removeItemFromCart(Long cartId) {
         cartRepository.deleteById(cartId);
     }
+
     public void clearCart(UsersModel buyer) {
         List<CartModel> cartItems = cartRepository.findAllByBuyer(buyer);
         cartRepository.deleteAll(cartItems);
     }
-
 
     @Transactional
     public List<CartModel> getCartItemsByBuyer(UsersModel buyer) {
@@ -90,5 +89,4 @@ public class CartService {
     private void deleteCartItems(List<CartModel> cartItems) {
         cartRepository.deleteAll(cartItems);
     }
-
 }

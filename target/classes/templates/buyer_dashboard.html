@@ -6,23 +6,50 @@
     <title>Buyer Dashboard</title>
     <style>
         html {
-            /* background-color: rgba(243, 233, 225, 0.85);*/
-            background: url(https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHx8MA%3D%3D) no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-            position: relative;
+            /* Ensure the entire page is covered */
             height: 100%;
+            margin: 0;
         }
 
         body {
             font-family: "Arial", sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHx8MA%3D%3D') no-repeat center center/cover;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Adjust the opacity to make the background darker or lighter */
+            z-index: -1;
+        }
+
+        .container {
+            z-index: 1;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
         }
 
         h1 {
@@ -48,7 +75,7 @@
 
         button[type="submit"] {
             padding: 10px 20px;
-            background-color: rgba(109, 76, 65, 1);;
+            background-color: rgba(109, 76, 65, 1);
             color: rgba(255, 255, 255, 1);
             border: none;
             border-radius: 5px;
@@ -64,7 +91,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            background-color: rgb(243, 233, 225, 0.5);
+            background-color: rgba(243, 233, 225, 0.5);
             opacity: 1;
             border-radius: 8px;
             padding: 20px;
@@ -118,7 +145,9 @@
     </style>
 </head>
 <body>
-<div>
+<div class="background"></div>
+<div class="overlay"></div>
+<div class="container">
     <h1>Buyer Dashboard</h1>
     <form th:action="@{/buyer/dashboard}" method="get">
         <input type="text" name="search" placeholder="Search products..." />
@@ -163,9 +192,7 @@
             <td th:text="${cartItem.product.name}">Product Name</td>
             <td th:text="${cartItem.quantity}">Quantity</td>
             <td>
-            <td>
                 <a th:href="@{/buyer/cart/remove/{cartId}(cartId=${cartItem.id})}" data-method="delete">Remove</a>
-            </td>
             </td>
         </tr>
         </tbody>
