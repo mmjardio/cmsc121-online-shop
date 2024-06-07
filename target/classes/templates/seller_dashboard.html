@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <title>Seller Dashboard</title>
     <style>
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background: url(https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHx8MA%3D%3D) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            position: relative;
+            height: 100%;
         }
 
         h1{
@@ -68,41 +73,35 @@
     </style>
 </head>
 <body>
-
-
 <div class="table">
-
-    <form>
-        <h1>Seller Dashboard</h1>
-        <h2>Products</h2>
-        <table>
-
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Iterate over products -->
-            <tr th:each="product : ${products}">
-                <td th:text="${product.id}">ID</td>
-                <td th:text="${product.name}">Name</td>
-                <td th:text="${product.price}">Price</td>
-                <td>
-                    <a th:href="@{/seller/products/edit/{productId}(productId=${product.id})}">Edit</a>
-                    <a th:href="@{/seller/products/delete/{productId}(productId=${product.id})}">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
+    <h1>Seller Dashboard</h1>
+    <h2>Products</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterate over products -->
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}">ID</td>
+            <td th:text="${product.name}">Name</td>
+            <td th:text="${product.price}">Price</td>
+            <td>
+                <a th:href="@{/seller/products/edit/{productId}(productId=${product.id})}">Edit</a>
+                <a th:href="@{/seller/products/delete/{productId}(productId=${product.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <div class="btn">
-        <a href="/seller/products/add">Add Product</a><br><br>
-        <a href="/seller/orders">View Orders</a>
-
+        <a th:href="@{/seller/products/add}">Add Product</a><br><br>
+        <a th:href="@{/seller/orders}">View Orders</a>
     </div>
+</div>
 </body>
 </html>
