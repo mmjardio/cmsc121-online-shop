@@ -4,6 +4,8 @@ import com.MP_121.model.UsersModel;
 import com.MP_121.repository.UsersRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsersService {
 
@@ -29,5 +31,6 @@ public class UsersService {
     public UsersModel authenticate(String email, String password) {
         return usersRepository.findByEmailAndPassword(email, password).orElse((null));
     }
+
 
 }

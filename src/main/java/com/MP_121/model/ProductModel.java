@@ -21,7 +21,7 @@ public class ProductModel {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "seller_id")
+    @JoinColumn(name = "seller_id", nullable = false)
     private UsersModel seller;
 
     @OneToMany(mappedBy = "product")
