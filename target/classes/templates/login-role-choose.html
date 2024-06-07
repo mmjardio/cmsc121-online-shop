@@ -3,25 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-<h1>Login</h1>
-
-<form action="/authenticate" method="post">
-    <!-- Input fields for email and password -->
-    <label>Email:</label><br>
-    <input type="text" name="email"><br><br>
-
-    <label>Password:</label><br>
-    <input type="password" name="password"><br><br>
-
-    <input type="submit" value="Login">
-</form>
-
-<p><a href="/buyer/login">Login as Buyer</a></p>
-<p><a href="/seller/login">Login as Seller</a></p>
-
-<!-- Display error messages if any -->
-<p th:if="${param.error != null}" style="color: red;">Invalid email or password.</p>
-<p th:if="${param.error == 'role'}" style="color: red;">Invalid role.</p>
+    <div class = "center">
+        <h1>Login as</h1>
+        <div class = "btn">
+            <a href="/buyer/login">Buyer</a></p>
+            <a href="/seller/login">Seller</a></p>
+        </div>
+    </div>
 </body>

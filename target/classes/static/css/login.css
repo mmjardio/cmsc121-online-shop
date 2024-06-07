@@ -1,0 +1,86 @@
+html {
+  background-color: #10151B;
+  background: url(https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHx8MA%3D%3D) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+  height: 100%;
+}
+
+html::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Adjust the opacity to make the background darker or lighter */
+  z-index: 0;
+}
+
+body {
+  font-family: "Oswald", sans-serif;
+}
+
+.center {
+  position: absolute;
+  margin: auto;
+  top: 90px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 581px;
+  height: 50%;
+  text-align: center; /* Center align the text */
+}
+
+h1 {
+  line-height: .95;
+  color: white;
+  font-weight: 900;
+  font-size: 50px;
+  text-transform: uppercase;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.btn {
+  display: flex;
+  justify-content: center; /* Center align the buttons */
+  gap: 10px; /* Add some space between the buttons */
+  margin: 20px auto;
+}
+
+.btn a {
+  display: inline-block;
+  width: 170px;
+  height: 30px;
+  padding: 6px 0;
+  border: 2px solid #66fcf1;
+  border-radius: 2px;
+  background: none;
+  font-size: 16px;
+  line-height: 30px;
+  color: #fff;
+  letter-spacing: .20em;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-transition: background .4s, color .4s;
+  transition: background .4s, color .4s;
+  cursor: pointer;
+}
+
+.btn a:hover {
+  background: #66fcf1;
+  color: #10151B;
+}
