@@ -19,4 +19,8 @@ public class OrderService {
     public List<OrderModel> getOrdersByBuyer(UsersModel buyerId) {
         return orderRepository.findByBuyer(buyerId);
     }
+
+    public List<OrderModel> getOrdersBySeller(UsersModel seller) {
+        return orderRepository.findBySeller(seller);
+    }
 }

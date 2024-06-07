@@ -41,7 +41,7 @@ public class LoginController {
         UsersModel user = usersService.authenticate(email, password);
         if (user != null && "Buyer".equals(user.getRole())) {
             session.setAttribute("user", user);
-            return "buyer_dashboard";
+            return "redirect:/buyer/dashboard";
         } else {
             model.addAttribute("error", "Invalid buyer credentials.");
             return "buyer_login_page";
@@ -53,7 +53,7 @@ public class LoginController {
         UsersModel user = usersService.authenticate(email, password);
         if (user != null && "Seller".equals(user.getRole())) {
             session.setAttribute("user", user);
-            return "seller_dashboard";
+            return "redirect:/seller/dashboard";
         } else {
             model.addAttribute("error", "Invalid seller credentials.");
             return "seller_login_page";

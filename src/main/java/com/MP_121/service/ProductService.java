@@ -47,8 +47,8 @@ public class ProductService {
         productRepository.deleteById(itemId);
     }
 
-    public List<ProductModel> getItemsBySeller(Long sellerId) {
-        return productRepository.findBySeller_Id(sellerId);
+    public List<ProductModel> getProductsBySeller(UsersModel seller) {
+        return productRepository.findBySeller_Id(seller.getId());
     }
 
     public List<ProductModel> getAllItems() {
