@@ -12,7 +12,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/all")
-    public List<ProductModel> getAllItems() {
+    public List<ProductModel> getAllProducts() {
         return productService.getAllItems();
     }
 
