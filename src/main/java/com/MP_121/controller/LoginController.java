@@ -21,30 +21,6 @@ public class LoginController {
         return "login-role-choose";
     }
 
-    @PostMapping("/authenticate")
-    public String authenticateUser(@RequestParam String email, @RequestParam String password, Model model) {
-        Optional<UsersModel> userOptional = authenticationService.authenticate(email, password);
-
-        if (userOptional.isPresent()) {
-            UsersModel user = userOptional.get();
-            String role = user.getRole();
-
-            if ("Buyer".equals(role)) {
-                // Redirect to buyer dashboard
-                return "buyer_dashboard";
-            } else if ("Seller".equals(role)) {
-                // Redirect to seller dashboard
-                return "seller_dashboard";
-            } else {
-                // Handle other roles if necessary
-                return "redirect:/login?error=role";
-            }
-        } else {
-            // Handle authentication failure
-            return "redirect:/login?error=auth";
-        }
-    }
-
     @GetMapping("/buyer/login")
     public String showBuyerLoginForm(Model model) {
         return "buyer_login_page"; // buyer/login.html template
@@ -55,14 +31,31 @@ public class LoginController {
         return "seller_login_page"; // seller/login.html template
     }
 
-    @PostMapping("/authenticate-buyer")
-    public String authenticateBuyer(@RequestParam String email, @RequestParam String password, Model model) {
-        return authenticateUser(email, password, model);
-    }
-
     @PostMapping("/authenticate-seller")
     public String authenticateSeller(@RequestParam String email, @RequestParam String password, Model model) {
-        return authenticateUser(email, password, model);
+        Optional<UsersModel> userOptional = authenticationService.authenticate(email, password);
+        if (userOptional.isPresent() && "Seller".equals(userOptional.get().getRole())) {
+            return "redirect:/seller/dashboard";
+        } else {
+            return "redirect:/seller/login";
+        }
+    }
+
+    @PostMapping("/authenticate-buyer")
+    public String authenticateBuyer(@RequestParam String email, @RequestParam String password, Model model) {
+        Optional<UsersModel> userOptional = authenticationService.authenticate(email, password);
+        if (userOptional.isPresent()) {
+            UsersModel user = userOptional.get();
+            if ("Buyer".equals(user.getRole())) {
+                return "redirect:/buyer/dashboard";
+            } else {
+                // Redirect to a specific error page for role mismatch
+                return "redirect:/buyer/login";
+            }
+        } else {
+            // Handle authentication failure
+            return "redirect:/login?error=auth";
+        }
     }
 
 }
