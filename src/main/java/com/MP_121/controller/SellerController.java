@@ -8,10 +8,12 @@ import com.MP_121.service.OrderService;
 import com.MP_121.service.ProductService;
 import com.MP_121.service.UsersService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -123,12 +125,13 @@ public class SellerController {
     }
 
     @RequestMapping(value = "/products/delete/{productId}", method = {RequestMethod.DELETE, RequestMethod.GET})
+    @Transactional
     public String deleteProduct(@PathVariable Long productId, HttpSession session, Model model) {
         UsersModel seller = (UsersModel) session.getAttribute("user");
         if (seller != null && "Seller".equals(seller.getRole())) {
             ProductModel product = productService.getItemById(productId);
             if (product.getSellerId().equals(seller)) {
-                if (!orderService.hasOrdersForProduct(productId)) {
+                if (!orderService.hasOrdersForProduct(productService.getItemById(productId))) {
                     productService.deleteItem(productId);
                     return "redirect:/seller/dashboard";
                 } else {
@@ -144,6 +147,7 @@ public class SellerController {
             return "seller_dashboard";
         }
     }
+
 
     @GetMapping("/orders")
     public String showOrders(HttpSession session, Model model) {

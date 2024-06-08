@@ -27,6 +27,9 @@ public class ProductModel {
     @OneToMany(mappedBy = "product")
     private List<CartModel> cartItems;
 
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderModel> orders = new ArrayList<>();
+
     public ProductModel() {
     }
 
@@ -84,5 +87,6 @@ public class ProductModel {
     public void setCartItems(List<CartModel> cartItems) {
         this.cartItems = cartItems;
     }
+
 }
 
