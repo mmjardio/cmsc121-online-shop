@@ -23,4 +23,8 @@ public class OrderService {
     public List<OrderModel> getOrdersBySeller(UsersModel seller) {
         return orderRepository.findBySeller(seller);
     }
+
+    public boolean hasOrdersForProduct(Long productId) {
+        return orderRepository.existsById(productId);
+    }
 }
