@@ -117,7 +117,7 @@
             <td th:text="${product.price}">Price</td>
             <td>
                 <a th:href="@{/seller/products/edit/{productId}(productId=${product.id})}">Edit</a>
-                <a th:href="@{/seller/products/delete/{productId}(productId=${product.id})}">Delete</a>
+                <a th:href="@{/seller/products/delete/{productId}(productId=${product.id})}" data-method="delete">Delete</a>
             </td>
         </tr>
         </tbody>

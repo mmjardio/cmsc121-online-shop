@@ -115,21 +115,26 @@ public class SellerController {
         if (seller != null && "Seller".equals(seller.getRole())) {
             product.setSellerId(seller);
             productService.updateItem(product);
-            return "redirect:/seller/products";
+            return "redirect:/seller/dashboard";
         } else {
             model.addAttribute("error", "Invalid seller credentials.");
             return "seller_edit_product";
         }
     }
 
-    @GetMapping("/products/delete/{productId}")
+    @RequestMapping(value = "/products/delete/{productId}", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String deleteProduct(@PathVariable Long productId, HttpSession session, Model model) {
         UsersModel seller = (UsersModel) session.getAttribute("user");
         if (seller != null && "Seller".equals(seller.getRole())) {
             ProductModel product = productService.getItemById(productId);
             if (product.getSellerId().equals(seller)) {
-                productService.deleteItem(productId);
-                return "redirect:/seller/products";
+                if (!orderService.hasOrdersForProduct(productId)) {
+                    productService.deleteItem(productId);
+                    return "redirect:/seller/dashboard";
+                } else {
+                    model.addAttribute("error", "Cannot delete product as there are existing orders associated with it.");
+                    return "seller_dashboard";
+                }
             } else {
                 model.addAttribute("error", "You can only delete your own products.");
                 return "seller_dashboard";
