@@ -85,9 +85,12 @@
     <h1>Select Quantity</h1>
     <form th:object="${cartItem}" th:action="@{/buyer/cart/add/{productId}(productId=${productId})}" method="post">
         <input type="hidden" th:field="*{product.id}" />
-        <input type="number" th:field="*{quantity}" placeholder="Quantity" required />
+        <input type="number" th:field="*{quantity}" placeholder="Quantity" min="0" required />
         <button type="submit">Add to Cart</button>
     </form>
+</div>
+<div th:if="${error}">
+    <p th:text="${error}"></p>
 </div>
 </body>
 </html>
