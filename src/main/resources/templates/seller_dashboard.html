@@ -138,6 +138,9 @@
         </tr>
         </tbody>
     </table>
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
     <div class="btn">
         <a th:href="@{/seller/products/add}">Add Product</a><br><br>
         <a th:href="@{/seller/orders}">View Orders</a>

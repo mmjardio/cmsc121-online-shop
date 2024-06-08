@@ -18,7 +18,7 @@ public class OrderModel {
     @JoinColumn(name = "seller_id")
     private UsersModel seller;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
     private ProductModel productId;
 

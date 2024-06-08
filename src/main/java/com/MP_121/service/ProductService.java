@@ -3,6 +3,7 @@ package com.MP_121.service;
 import com.MP_121.model.ProductModel;
 import com.MP_121.model.UsersModel;
 import com.MP_121.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -43,6 +44,7 @@ public class ProductService {
         return productRepository.save(item);
     }
 
+    @Transactional
     public void deleteItem(Long itemId) {
         productRepository.deleteById(itemId);
     }
@@ -55,6 +57,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    @Transactional
     public ProductModel getItemById(Long productId) {
         Optional<ProductModel> productOptional = productRepository.findById(productId);
         return productOptional.orElse(null);
@@ -63,4 +66,5 @@ public class ProductService {
     public List<ProductModel> searchItemsByName(String name) {
         return productRepository.findByNameContainingIgnoreCase(name);
     }
+
 }
